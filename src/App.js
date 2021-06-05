@@ -17,18 +17,6 @@ function App() {
 
   const headers = Object.keys(data[0]).splice(0, 4);
 
-  //  Sort step 1
-  // const orderBy = (data, direction, value) => {
-  //   if (direction === "desc") {
-  //     return [...data].sort((a, b) => (a[value] > b[value] ? 1 : -1));
-  //   }
-  //   if (direction === "asc") {
-  //     return [...data].sort((a, b) => (a[value] > b[value] ? -1 : 1));
-  //   }
-
-  //   return data;
-  // };
-
   //  Sort step 2
   const SortArrow = direction => {
     if (direction === "desc") {
