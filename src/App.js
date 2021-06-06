@@ -4,41 +4,29 @@ import { BsSearch, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 import { Table, Thead, Tbody, Tr, Th, Td, Text, Input, InputGroup, InputLeftElement, Box } from "@chakra-ui/react";
 import { Checkbox, Stack, Flex, Icon } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
-import useSortableData from './useSortableData'
-
+import useSortableData from "./useSortableData";
 
 function App() {
   const data = people;
   const [q, setQ] = useState("");
   const [searchColumn, setSearchColumn] = useState(["first_name", "last_name"]);
-  // const [direction, setDirection] = useState("asc");
-  // const [value, setValue] = useState("first_name");
   const { items, requestSort, sortConfig } = useSortableData(data);
 
   const headers = Object.keys(data[0]).splice(0, 4);
 
-  //  Sort step 2
   const SortArrow = direction => {
     if (direction === "desc") {
       return <Icon as={BsArrowDownShort} w={5} h={5} />;
-    } else if (direction === "asc") {
-      return <Icon as={BsArrowUpShort} w={5} h={5} />; }
-    // } else {
-    //   setDirection(null);
-    // }
+    }
+    return <Icon as={BsArrowUpShort} w={5} h={5} />;
   };
 
-  //  Sort step 3
-  // const orderedCountries = orderBy(data, direction, value);
-
-  // const switchDirection = () => {
-  //   direction === "desc" ? setDirection("asc") : setDirection("desc");
-  // };
-
-  // const setValueAndDirection = value => {
-  //   switchDirection();
-  //   setValue(value);
-  // };
+  const getClassNamesFor = name => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? SortArrow(sortConfig.direction) : undefined;
+  };
 
   const search = rows => {
     return rows.filter(row =>
@@ -88,8 +76,12 @@ function App() {
           <Thead>
             <Tr>
               {headers.map(item => (
-                <Th key={uuidv4()} onClick={() => requestSort(headers.filter(el => el === item).toString()) } p="1" w="25%">
-                  {item}
+                <Th
+                  key={uuidv4()}
+                  onClick={() => requestSort(headers.filter(el => el === item).toString())}
+                  p="1"
+                  w="25%">
+                  {item}  {getClassNamesFor(item)}
                 </Th>
               ))}
             </Tr>
