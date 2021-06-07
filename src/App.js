@@ -8,25 +8,13 @@ import useSortableData from "./useSortableData";
 
 function App() {
   const data = people;
+  // let config = {key:'id', direction: 'asc' }
   const [q, setQ] = useState("");
   const [searchColumn, setSearchColumn] = useState(["first_name", "last_name"]);
-  const { items, requestSort, sortConfig } = useSortableData(data);
+  const { items, requestSort, sortArrow, sortConfig } = useSortableData(data);
+  const [arrow, setArrow] = useState("")
 
   const headers = Object.keys(data[0]).splice(0, 4);
-
-  const SortArrow = direction => {
-    if (direction === "desc") {
-      return <Icon as={BsArrowDownShort} w={5} h={5} />;
-    }
-    return <Icon as={BsArrowUpShort} w={5} h={5} />;
-  };
-
-  const getClassNamesFor = name => {
-    if (!sortConfig) {
-      return;
-    }
-    return sortConfig.key === name ? SortArrow(sortConfig.direction) : undefined;
-  };
 
   const search = rows => {
     return rows.filter(row =>
@@ -47,6 +35,10 @@ function App() {
 
     setSearchColumn(inState);
   };
+
+  const handleSort = (item) => {
+    requestSort(headers.filter(el => el === item).toString())
+  }
 
   return (
     <Box w="100%">
@@ -78,10 +70,11 @@ function App() {
               {headers.map(item => (
                 <Th
                   key={uuidv4()}
-                  onClick={() => requestSort(headers.filter(el => el === item).toString())}
+                  onClick={() => handleSort(item)}
                   p="1"
                   w="25%">
-                  {item}  {getClassNamesFor(item)}
+                  {item}  {item === Object.values(sortConfig)[0] && <Icon as={sortArrow(item) ==='asc' ? BsArrowUpShort : BsArrowDownShort} 
+                  w={5} h={5} color="red.500"/> }
                 </Th>
               ))}
             </Tr>
