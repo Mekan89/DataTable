@@ -39,9 +39,9 @@ function App() {
   }
 
   return (
-    <Box w="100%">
-      <Box textAlign="center" p="3" bg="gray" color="white">
-        <Text fontSize="3xl" p="3">
+    <Box maxW='xl' m='50px auto'>
+      <Box textAlign="center" p="2" bg="gray.200" color="black">
+        <Text fontSize="3xl">
           Data Filter & Sort
         </Text>
       </Box>
@@ -51,7 +51,7 @@ function App() {
           <Input placeholder="Search" value={q} onChange={e => setQ(e.target.value)} />
         </InputGroup>
       </Box>
-      <Flex p="3">
+      <Flex p="3" justify='center'>
         <Stack spacing={10} direction="row">
           {headers.map(item => (
             <Checkbox key={uuidv4()} value={item} isChecked={searchColumn.includes(item)} onChange={searchHandler}>
@@ -69,8 +69,7 @@ function App() {
                 <Th
                   key={uuidv4()}
                   onClick={() => handleSort(item)}
-                  p="1"
-                  w="25%">
+                  p="1">
                   {item}  {item === Object.values(sortConfig)[0] && <Icon as={sortArrow(item) ==='asc' ? BsArrowUpShort : BsArrowDownShort} 
                   w={5} h={5} color="red.500"/> }
                 </Th>
