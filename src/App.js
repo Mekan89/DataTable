@@ -8,11 +8,9 @@ import useSortableData from "./useSortableData";
 
 function App() {
   const data = people;
-  // let config = {key:'id', direction: 'asc' }
   const [q, setQ] = useState("");
   const [searchColumn, setSearchColumn] = useState(["first_name", "last_name"]);
   const { items, requestSort, sortArrow, sortConfig } = useSortableData(data);
-  const [arrow, setArrow] = useState("")
 
   const headers = Object.keys(data[0]).splice(0, 4);
 
